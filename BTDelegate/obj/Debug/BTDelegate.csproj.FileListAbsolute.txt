@@ -1,0 +1,7 @@
+D:\BTC#\BTDelegate\BTDelegate\obj\Debug\BTDelegate.csproj.AssemblyReference.cache
+D:\BTC#\BTDelegate\BTDelegate\obj\Debug\BTDelegate.csproj.CoreCompileInputs.cache
+D:\BTC#\BTDelegate\BTDelegate\bin\Debug\BTDelegate.exe.config
+D:\BTC#\BTDelegate\BTDelegate\bin\Debug\BTDelegate.exe
+D:\BTC#\BTDelegate\BTDelegate\bin\Debug\BTDelegate.pdb
+D:\BTC#\BTDelegate\BTDelegate\obj\Debug\BTDelegate.exe
+D:\BTC#\BTDelegate\BTDelegate\obj\Debug\BTDelegate.pdb
