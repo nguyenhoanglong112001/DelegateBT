@@ -33,5 +33,13 @@ namespace BTDelegate
     }
     public class GameConstant
     {
+        public static Dictionary<ItemRarity, int> priceitem = new Dictionary<ItemRarity, int>
+        {
+            {ItemRarity.Common,100},
+            {ItemRarity.Rare,150 },
+            {ItemRarity.Epic,250 },
+            {ItemRarity.Lengendary, 400 },
+            {ItemRarity.Mystical,600 }
+        };
     }
 }

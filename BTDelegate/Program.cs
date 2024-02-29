@@ -15,6 +15,7 @@ namespace BTDelegate
     public delegate void CreateHero();
     public delegate void UseItem(Item item,Chracter hero);
     public delegate void UnequipItem(Item item, Chracter hero);
+    public delegate void SellItem(Item item);
     public class Program
     {
         public static CreateItem Gacha;
@@ -23,6 +24,7 @@ namespace BTDelegate
         public static CreateHero createhero;
         public static UseItem useitem;
         public static UnequipItem unuseitem;
+        public static SellItem sellItem;
 
         public static ItemManager itemmanager = null;
         public static UIManager uimanager = null;

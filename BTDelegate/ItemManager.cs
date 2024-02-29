@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO.Ports;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -19,6 +20,7 @@ namespace BTDelegate
             Program.Gacha = CreateItem;
             Program.UpdateItemlv = UpdatelevelItem;
             Program.UpdateRarityItem = UpdateRarity;
+            Program.sellItem = SellItem;
         }
 
         public void CreateItem(int count)
@@ -49,9 +51,8 @@ namespace BTDelegate
                 {
                     rarity = ItemRarity.Common;
                 }
-
                 int level = 1;
-                Item item = new Item(type, rarity, level);
+                Item item = new Item(type, rarity, level,GameConstant.priceitem[rarity]);
                 items.Add(item);
                 Program.uimanager.ShowItem(item);
                 Thread.Sleep(100);
@@ -77,10 +78,15 @@ namespace BTDelegate
                 level = items[index1].level;
             }
             else { level = items[index2].level; }
-            Item item = new Item(items[index1].type, (ItemRarity)((int)items[index1].rarity + 1), level);
+            Item item = new Item(items[index1].type, (ItemRarity)((int)items[index1].rarity + 1), level, GameConstant.priceitem[(ItemRarity)((int)items[index1].rarity + 1)]);
             items.RemoveAt(index1);
             items.RemoveAt(index2);
             items.Add(item);
+        }
+
+        public void SellItem(Item item)
+        {
+            items.Remove(item);
         }
     }
 }

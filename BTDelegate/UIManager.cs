@@ -14,6 +14,7 @@ namespace BTDelegate
         public int MainMenu()
         {
             Console.Clear();
+            ShowGold();
             Console.WriteLine("1. Create Item");
             Console.WriteLine("2. Show all ITem in inventory");
             Console.WriteLine("3. Create Hero");
@@ -25,6 +26,7 @@ namespace BTDelegate
         public void Gacha()
         {
             Console.Clear();
+            ShowGold();
             Console.WriteLine("1. Roll x1");
             Console.WriteLine("2. Roll x10");
             int input = InputInt("Your choice: ");
@@ -43,6 +45,7 @@ namespace BTDelegate
         {
             Console.Clear();
             Console.WriteLine("---------Inventory-----------");
+            ShowGold();
             for (int i =0;i< items.Count;i++)
             {
                 if (items[i] != null) 
@@ -56,7 +59,8 @@ namespace BTDelegate
             Console.WriteLine("1. Update level item");
             Console.WriteLine("2. Merge Item");
             Console.WriteLine("3. Use Item");
-            Console.WriteLine("4. Back to main menu");
+            Console.WriteLine("4. Sell Item");
+            Console.WriteLine("5. Back to main menu");
             int input = InputInt("Your choice: ");
             if (input == 1)
             {
@@ -100,20 +104,34 @@ namespace BTDelegate
             }
             else if (input == 4)
             {
+                string select = SellItem(items, index - 1);
+                if (select.Equals("Y") || select.Equals("y"))
+                {
+                    Program.sellItem(items[index - 1]);
+                    CurrencyManager.GoldIncrease(items[index - 1].price);
+                    Console.WriteLine($"Your current gold: {CurrencyManager.currentgold}");
+                    Console.ReadKey();
+                    Program.Start();
+                }
+            }
+            else if (input == 5)
+            {
                 Program.Start();
             }
             Console.ReadKey();
         }
         public void ShowItem(Item item)
         {
-            Console.WriteLine($"Type: {item.type} \t Rarity: {item.rarity} \t Level: {item.level}");
+            Console.WriteLine($"Type: {item.type} \t Rarity: {item.rarity} \t Level: {item.level} \t Price: {item.price}");
         }
 
         public string Updatelvitem(List<Item> items, int index)
         {
             Console.Clear();
+            ShowGold();
             Console.WriteLine("Item update information");
             Console.WriteLine($"{items[index].type} \t {items[index].rarity} \t {items[index].level + 1}");
+            Console.WriteLine("Gold to update: 100");
             string select = InputStr("Y/y: update item,N/n Back to inventory");
             return select;
         }
@@ -188,6 +206,11 @@ namespace BTDelegate
             Program.Start();
         }
 
+        public void ShowGold()
+        {
+            Console.WriteLine($"Current gold {CurrencyManager.currentgold}");
+        }
+
         public int InputInt(string message)
         {
             Console.WriteLine(message);
@@ -206,7 +229,7 @@ namespace BTDelegate
         {
             Console.Clear();
             Console.WriteLine("Item used information");
-            Console.WriteLine($"{items[index].type} \t {items[index].rarity } \t {items[index].level}");
+            Console.WriteLine($"{items[index].type} \t {items[index].rarity } \t {items[index].level} \t {GameConstant.priceitem[items[index].rarity]}");
             Console.WriteLine("Do You Want to use this item:");
             string select = InputStr("Y / y Yes, N / n No");
             return select;
@@ -216,8 +239,18 @@ namespace BTDelegate
         {
             Console.Clear();
             Console.WriteLine("Item unequip information: ");
-            Console.WriteLine($"{items[index].type} \t {items[index].rarity} \t {items[index].level}");
+            Console.WriteLine($"{items[index].type} \t {items[index].rarity} \t {items[index].level} \t {GameConstant.priceitem[items[index].rarity]}");
             Console.WriteLine("Do you want to unequip this item");
+            string select = InputStr("Y / y Yes, N / n No");
+            return select;
+        }
+
+        public string SellItem(List<Item> items,int index)
+        {
+            Console.Clear();
+            Console.WriteLine("Item sell information: ");
+            Console.WriteLine($"{items[index].type} \t {items[index].rarity} \t {items[index].level} \t {GameConstant.priceitem[items[index].rarity]}");
+            Console.WriteLine("Do you want to sell this item");
             string select = InputStr("Y / y Yes, N / n No");
             return select;
         }
