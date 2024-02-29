@@ -14,14 +14,18 @@ namespace BTDelegate
         {
             currentgold += bonus;
         }
-        public int GoldtoUpdate(int level)
+        public static int GoldtoUpdate(int level)
         {
             return 50*level;
         }
 
-        public bool CheckGoldUpdate()
+        public static bool CheckGoldUpdate(int level)
         {
-
+            if (currentgold <= GoldtoUpdate(level))
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

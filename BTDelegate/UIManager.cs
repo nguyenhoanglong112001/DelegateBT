@@ -67,9 +67,16 @@ namespace BTDelegate
                 string select = Updatelvitem(items, index-1);
                 if (select.Equals("y") || select.Equals("Y"))
                 {
-                    Program.UpdateItemlv(index-1);
+                    if (!CurrencyManager.CheckGoldUpdate(items[index-1].level))
+                    {
+                        Console.WriteLine("Not enough gold to update ");
+                        Console.ReadKey();
+                        Program.Start();
+                    }
+                    Program.UpdateItemlv(index - 1);
+                    CurrencyManager.GoldIncrease(CurrencyManager.GoldtoUpdate(items[index - 1].level));
                     Console.WriteLine("Update succesfully");
-                    ShowItem(items[index- 1]);
+                    ShowItem(items[index - 1]);
                     Console.ReadKey();
                     Program.Start();
                 }
@@ -107,8 +114,8 @@ namespace BTDelegate
                 string select = SellItem(items, index - 1);
                 if (select.Equals("Y") || select.Equals("y"))
                 {
-                    Program.sellItem(items[index - 1]);
                     CurrencyManager.GoldIncrease(items[index - 1].price);
+                    Program.sellItem(items[index - 1]);
                     Console.WriteLine($"Your current gold: {CurrencyManager.currentgold}");
                     Console.ReadKey();
                     Program.Start();
@@ -131,7 +138,7 @@ namespace BTDelegate
             ShowGold();
             Console.WriteLine("Item update information");
             Console.WriteLine($"{items[index].type} \t {items[index].rarity} \t {items[index].level + 1}");
-            Console.WriteLine("Gold to update: 100");
+            Console.WriteLine($"Gold to update: {CurrencyManager.GoldtoUpdate(items[index].level)}");
             string select = InputStr("Y/y: update item,N/n Back to inventory");
             return select;
         }

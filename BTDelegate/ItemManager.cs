@@ -63,10 +63,23 @@ namespace BTDelegate
         {
             items[index].level++;
         }
-
+        public bool CheckUpdateRarity(Item item)
+        {
+            if (item.rarity == ItemRarity.Mystical)
+            {
+                return false;
+            }
+            return true;
+        }
         public void UpdateRarity(int index1, int index2)
         {
-            if (items[index1].type != items[index2].type && items[index1].rarity != items[index2].rarity)
+            if (!CheckUpdateRarity(items[index1]))
+            {
+                Console.WriteLine("Item has highest raruty");
+                Console.ReadKey();
+                return;
+            }
+            if (items[index1].type != items[index2].type && items[index1].rarity != items[index2].rarity ) 
             {
                 Console.WriteLine("Item do not have same type and rarity");
                 Console.ReadKey();
