@@ -78,7 +78,7 @@ namespace BTDelegate
             {
                 showListsameItem(items, index-1);
                 int index2 = InputInt("chon item de megre: ");
-                string select = MergeItem(items,index - 1,index2-1);
+                string select = MergeItem(items,index - 1);
                 if (select.Equals("y") || select.Equals("Y"))
                 {
                     Program.UpdateRarityItem(index - 1,index2-1);
@@ -117,7 +117,7 @@ namespace BTDelegate
             string select = InputStr("Y/y: update item,N/n Back to inventory");
             return select;
         }
-        public string MergeItem(List<Item> items, int index1,int index2)
+        public string MergeItem(List<Item> items, int index1)
         {
             Console.Clear();
             Console.WriteLine("Item update information");
