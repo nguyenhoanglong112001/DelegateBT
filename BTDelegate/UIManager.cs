@@ -64,10 +64,10 @@ namespace BTDelegate
             int input = InputInt("Your choice: ");
             if (input == 1)
             {
-                string select = Updatelvitem(items, index-1);
+                string select = Updatelvitem(items, index - 1);
                 if (select.Equals("y") || select.Equals("Y"))
                 {
-                    if (!CurrencyManager.CheckGoldUpdate(items[index-1].level))
+                    if (!CurrencyManager.CheckGoldUpdate(items[index - 1].level))
                     {
                         Console.WriteLine("Not enough gold to update ");
                         Console.ReadKey();
@@ -85,9 +85,14 @@ namespace BTDelegate
                     ShowItem(items[index - 1]);
                 }
             }
-            else if (input ==2)
+            else if (input == 2)
             {
-                showListsameItem(items, index-1);
+                List<Item> sameitem = items.Where((item,i) =>i != index-1 && item.type == items[index - 1].type && item.rarity == items[index - 1].rarity).ToList();
+                for (int i = 0; i < sameitem.Count; i++)
+                {
+                    int orgIndex = items.IndexOf(sameitem[i]) + 1;
+                    Console.WriteLine($"{orgIndex}. {sameitem[i].type}");
+                }
                 int index2 = InputInt("chon item de megre: ");
                 string select = MergeItem(items,index - 1);
                 if (select.Equals("y") || select.Equals("Y"))
@@ -172,6 +177,7 @@ namespace BTDelegate
         {
             Console.Clear();
             Console.WriteLine($"Hero Type: {hero.type}");
+            Console.WriteLine($"Level: {hero.level}");
             Console.WriteLine($"Attack Dame: {hero.attack}");
             Console.WriteLine($"Power Dame: {hero.powerdame}");
             Console.WriteLine($"HP: {hero.HP}");

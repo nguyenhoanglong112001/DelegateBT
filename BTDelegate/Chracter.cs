@@ -13,6 +13,7 @@ namespace BTDelegate
         public int powerdame;
         public int HP;
         public int atkspeed;
+        public int level;
         public List<Item> itemuse;
 
         public Chracter(CharacterType Type,int atk,int power,int health,int AtkSpeed) 

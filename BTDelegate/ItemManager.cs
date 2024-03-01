@@ -90,7 +90,7 @@ namespace BTDelegate
             {
                 level = items[index1].level;
             }
-            else { level = items[index2].level; }
+            else { level = items[index2].level;}
             Item item = new Item(items[index1].type, (ItemRarity)((int)items[index1].rarity + 1), level, GameConstant.priceitem[(ItemRarity)((int)items[index1].rarity + 1)]);
             items.RemoveAt(index1);
             items.RemoveAt(index2);
