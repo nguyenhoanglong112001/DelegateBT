@@ -156,23 +156,6 @@ namespace BTDelegate
             return select;
         }
 
-        public void showListsameItem(List<Item> items,int index)
-        {
-            for (int i=0;i<items.Count;i++)
-            {
-                if (i != index)
-                {
-                    if (items[index].rarity == items[i].rarity && items[index].type == items[i].type)
-                    {
-                        Console.WriteLine();
-                        Console.WriteLine($"{i + 1}. {items[i].type}");
-                        ShowItem(items[i]);
-                    }
-                }
-            }
-            Console.ReadKey();
-        }
-
         public void ShowHero(Chracter hero)
         {
             Console.Clear();
