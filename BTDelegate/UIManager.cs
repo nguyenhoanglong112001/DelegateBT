@@ -19,6 +19,7 @@ namespace BTDelegate
             Console.WriteLine("2. Show all ITem in inventory");
             Console.WriteLine("3. Create Hero");
             Console.WriteLine("4. Show hero infomation");
+            Console.WriteLine("5. Unequip Item");
             int input = InputInt("Your choice: ");
             return input;
         }
@@ -44,6 +45,7 @@ namespace BTDelegate
         public void ShowAllItem(List<Item> items,Chracter hero)
         {
             Console.Clear();
+            items = items.OrderByDescending(i=>i.rarity).ToList();
             Console.WriteLine("---------Inventory-----------");
             ShowGold();
             for (int i =0;i< items.Count;i++)
@@ -105,10 +107,17 @@ namespace BTDelegate
             }
             else if (input == 3)
             {
+                if (Program.heromanager.FullItem(hero))
+                {
+                    Console.WriteLine("Full slot!");
+                    Console.ReadKey();
+                    Program.Start();
+                }
+                int itemindex = InputInt("Choice slot item want to add: ");
                 string select = EquiqItem(items,index-1);
                 if (select.Equals("Y")||select.Equals("y"))
                 {
-                    Program.useitem(items[index - 1], hero);
+                    Program.useitem(index-1,itemindex-1,items[index - 1], hero);
                     ShowHero(hero);
                     Console.ReadKey();
                     MainMenu();
@@ -171,37 +180,52 @@ namespace BTDelegate
                 {
                     if (hero.itemuse[i] != null)
                     {
-                        Console.WriteLine($"Item: {hero.itemuse[i].type}");
+                        Console.WriteLine($"Item: {i + 1}. {hero.itemuse[i].type}");
                     }
                 }
             }
             else { Console.WriteLine($"Item: "); }
             Console.WriteLine("--------------------------");
-            Console.WriteLine("1. Uneqip Item");
-            Console.WriteLine("2. Back to main menu");
-            int choice = InputInt("Your choice: ");
-            if (choice == 1)
-            {
-                int index = InputInt("Choice item to unequip: ");
-                string select = UnequipItem(hero.itemuse, index - 1);
-                if (hero.itemuse == null)
-                {
-                    Console.WriteLine("slot empty!");
-                    Program.Start();
-                }
-                else
-                {
-                    Program.unuseitem(hero.itemuse[index-1],hero);
-                    Console.WriteLine("Unequip item succes");
-                    Console.ReadKey();
-                    Program.Start();
-                }
-            }
-            else if (choice == 2) { Program.Start(); }
             Console.ReadKey();
             Program.Start();
         }
+        public void UnequipUI(Chracter hero)
+        {
+            Console.Clear();
+            Console.WriteLine($"Hero Type: {hero.type}");
+            Console.WriteLine($"Level: {hero.level}");
+            Console.WriteLine($"Attack Dame: {hero.attack}");
+            Console.WriteLine($"Power Dame: {hero.powerdame}");
+            Console.WriteLine($"HP: {hero.HP}");
+            Console.WriteLine($"Attack Speed: {hero.atkspeed}");
+            if (hero.itemuse != null)
+            {
+                for (int i = 0; i < hero.itemuse.Count; i++)
+                {
+                    if (hero.itemuse[i] != null)
+                    {
+                        Console.WriteLine($"Item: {i + 1}. {hero.itemuse[i].type}");
+                    }
+                }
+            }
+            else { Console.WriteLine($"Item: "); }
+            Console.WriteLine("--------------------------");
+            int index = InputInt("Choice item to unequip: ");
+            string select = UnequipItem(hero.itemuse, index - 1);
+            if (hero.itemuse == null)
+            {
+                Console.WriteLine("slot empty!");
+                Program.Start();
+            }
+            else
+            {
+                Program.unuseitem(index - 1, hero.itemuse[index - 1], hero);
+                Console.WriteLine("Unequip item succes");
+                Console.ReadKey();
+                Program.Start();
+            }
 
+        }
         public void ShowGold()
         {
             Console.WriteLine($"Current gold {CurrencyManager.currentgold}");
@@ -249,6 +273,18 @@ namespace BTDelegate
             Console.WriteLine("Do you want to sell this item");
             string select = InputStr("Y / y Yes, N / n No");
             return select;
+        }
+
+        public int CharcterType()
+        {
+            Console.Clear();
+            Console.WriteLine("Chosse your hero type: ");
+            Console.WriteLine("1. Tank");
+            Console.WriteLine("2. Fighter");
+            Console.WriteLine("3. Assasin");
+            Console.WriteLine("4. Support");
+            Console.WriteLine("5. Range");
+            return InputInt("Your choice")-1;
         }
     }
 }

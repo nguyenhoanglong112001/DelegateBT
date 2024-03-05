@@ -13,9 +13,10 @@ namespace BTDelegate
     public delegate void Updatelv(int index);
     public delegate void UpdateRarity(int index1, int index2);
     public delegate void CreateHero();
-    public delegate void UseItem(Item item,Chracter hero);
-    public delegate void UnequipItem(Item item, Chracter hero);
+    public delegate void UseItem(int index, int slot,Item item,Chracter hero);
+    public delegate void UnequipItem(int slot, Item item, Chracter hero);
     public delegate void SellItem(Item item);
+    public delegate void CreateEnemy();
     public class Program
     {
         public static CreateItem Gacha;
@@ -25,6 +26,7 @@ namespace BTDelegate
         public static UseItem useitem;
         public static UnequipItem unuseitem;
         public static SellItem sellItem;
+        public static CreateEnemy createenemy;
 
         public static ItemManager itemmanager = null;
         public static UIManager uimanager = null;
@@ -57,6 +59,10 @@ namespace BTDelegate
             if(input == 4)
             {
                 uimanager.ShowHero(heromanager.hero);
+            }
+            if (input == 5)
+            {
+                uimanager.UnequipUI(heromanager.hero);
             }
         }
     }

@@ -8,6 +8,7 @@ namespace BTDelegate
 {
     public class Chracter
     {
+        public string charatername;
         public CharacterType type;
         public int attack;
         public int powerdame;
@@ -15,14 +16,13 @@ namespace BTDelegate
         public int atkspeed;
         public int level;
         public List<Item> itemuse;
+        public bool Alive => HP > 0;
 
-        public Chracter(CharacterType Type,int atk,int power,int health,int AtkSpeed) 
+        public Chracter(CharacterType Type,string name) 
         {
             this.type = Type;
-            this.attack = atk;
-            this.powerdame = power;
-            this.HP = health;
-            this.atkspeed = AtkSpeed;
+            charatername = name;
+            level = 1;
         }
     }
 }

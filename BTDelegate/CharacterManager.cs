@@ -9,61 +9,53 @@ namespace BTDelegate
     public class CharacterManager
     {
         public Chracter hero = null;
+        public Enemy Monster = null;
         
         public CharacterManager() 
         {
             Program.createhero = CreateHero;
             Program.useitem = UseItem;
             Program.unuseitem = UnequipItem;
+            Program.createenemy = CreateEnemy;
+        }
+        public void CreateEnemy()
+        {
+            Monster = new Enemy((CharacterType)GameHelper.Randomvalue(0, 5), "Monster", hero);
+            Console.WriteLine("Enemy create");
+            Program.uimanager.ShowHero(Monster);
+            Console.ReadKey();
+            Program.Start();
         }
         public void CreateHero()
         {
-            CharacterType type = (CharacterType)GameHelper.Randomvalue(0, 5);
+            Console.WriteLine("Hero name: ");
+            string name = Console.ReadLine();
+            CharacterType type = (CharacterType)Program.uimanager.CharcterType();
             switch(type)
             {
                 case CharacterType.Assasin:
                     {
-                        int atk = GameHelper.Randomvalue(130, 150);
-                        int PowerDame = GameHelper.Randomvalue(0, 25);
-                        int HP = GameHelper.Randomvalue(300, 600);
-                        int speed = GameHelper.Randomvalue(25, 40);
-                        hero = new Chracter(CharacterType.Assasin,atk,PowerDame,HP,speed);
+                        hero = new Assasin(CharacterType.Assasin, name);
                         break;
                     }
                 case CharacterType.Fighter:
                     {
-                        int atk = GameHelper.Randomvalue(80,100);
-                        int PowerDame = GameHelper.Randomvalue(0, 10);
-                        int HP = GameHelper.Randomvalue(700,1000);
-                        int speed = GameHelper.Randomvalue(10, 50);
-                        hero = new Chracter(CharacterType.Fighter, atk, PowerDame, HP, speed);
+                        hero = new Fighter(CharacterType.Fighter,name);
                         break;
                     }
                 case CharacterType.Support:
                     {
-                        int atk = GameHelper.Randomvalue(20, 50);
-                        int PowerDame = GameHelper.Randomvalue(70, 150);
-                        int HP = GameHelper.Randomvalue(250, 500);
-                        int speed = GameHelper.Randomvalue(10, 30);
-                        hero = new Chracter(CharacterType.Support, atk, PowerDame, HP, speed);
+                        hero = new Support(CharacterType.Support,name);
                         break;
                     }
                 case CharacterType.Tank:
                     {
-                        int atk = GameHelper.Randomvalue(50, 80);
-                        int PowerDame = 0;
-                        int HP = GameHelper.Randomvalue(1000, 1500);
-                        int speed = GameHelper.Randomvalue(10, 30);
-                        hero = new Chracter(CharacterType.Tank, atk, PowerDame, HP, speed);
+                        hero = new Tanker(CharacterType.Tank, name);
                         break;
                     }
                 case CharacterType.Range:
                     {
-                        int atk = GameHelper.Randomvalue(100, 120);
-                        int PowerDame = 0;
-                        int HP = GameHelper.Randomvalue(200, 500);
-                        int speed = GameHelper.Randomvalue(50, 70);
-                        hero = new Chracter(CharacterType.Range, atk, PowerDame, HP, speed);
+                        hero = new Ranged(CharacterType.Range,name);
                         break;
                     }
             }
@@ -77,14 +69,14 @@ namespace BTDelegate
             {
                 hero.itemuse = new List<Item>();
             }
-            else if (hero.itemuse.Count >= 3)
+            else if (hero.itemuse.Count >= 4)
             {
                 Console.WriteLine("Full slot item");
                 return true;
             }
             return false;
         }
-        public void UseItem(Item item,Chracter hero)
+        public void UseItem(int index, int slot, Item item,Chracter hero)
         {
             if (FullItem(hero))
             {
@@ -92,19 +84,19 @@ namespace BTDelegate
             }
             if (hero.itemuse == null)
             {
-                hero.itemuse = new List<Item>();
+                hero.itemuse = new List<Item>(4);
             }
-            hero.itemuse.Add(item);
-            Program.itemmanager.items.Remove(item);
+            hero.itemuse.Insert(slot, item);
+            Program.itemmanager.items[index] = null;
         }
 
-        public void UnequipItem (Item item, Chracter hero)
+        public void UnequipItem (int slot, Item item, Chracter hero)
         {
             if (hero.itemuse == null)
             {
                 return;
             }
-            hero.itemuse.Remove(item);
+            hero.itemuse.RemoveAt(slot);
             Program.itemmanager.items.Add(item);
         }
     }
